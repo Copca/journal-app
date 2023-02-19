@@ -1,38 +1,226 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pasos Iniciales para crear un Proyecto con Next.js, TypeScript, Taildwind y Prisma
 
-## Getting Started
+## Crear el proyecto https://nextjs.org/docs/getting-started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+npx create-next-app@latest --typescript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Configuración Tailwind https://tailwindcss.com/
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Instalar
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
 
-## Learn More
+2. Agregar el content en `taildwind.config`
 
-To learn more about Next.js, take a look at the following resources:
+```
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+	content: [
+		'./pages/**/*.{js,ts,jsx,tsx}',
+		'./components/**/*.{js,ts,jsx,tsx}'
+	],
+	theme: {
+		container: {
+			center: true,
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+			padding: {
+				DEFAULT: '1rem',
+				// sm: '2rem',
+				// lg: '4rem'
+				// xl: '5rem',
+				'2xl': '6rem'
+			}
+		},
+		extend: {
+			animation: {
+				fadeIn: 'fadeIn 1s 1',
+				fadeOut: 'fadeOut 1s 1'
+			},
+			keyframes: {
+				fadeIn: {
+					'0%': { opacity: 0 },
+					'100%': { opacity: 1 }
+				},
+				fadeOut: {
+					'0%': { opacity: 1 },
+					'100%': { opacity: 0 }
+				}
+			}
+		}
+	},
+	plugins: [require('tw-elements/dist/plugin')]
+};
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
 
-## Deploy on Vercel
+3. Agregar las directivas de Taildwins `public/styles/globals.css`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+@layer components {
+	.btn {
+		@apply flex justify-center items-center text-center text-white font-bold text-xs uppercase rounded px-4 py-2 transition-colors cursor-pointer;
+	}
+}
+
+```
+
+---
+
+## Configurar TW-Elements https://tailwind-elements.com/
+
+1. Instalación
+
+```
+npm install tw-elements
+```
+
+2. Integración en `tailwind.config.js`
+
+```
+module.exports = {
+    content: ['./src/**/*.{html,js}', './node_modules/tw-elements/dist/js/**/*.js'],
+    plugins: [
+        require('tw-elements/dist/plugin')
+    ]
+}
+```
+
+3. Agregar el script a next `_document.ts`
+
+```
+import { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script';
+
+export default function Document() {
+	return (
+		<Html lang='es'>
+			<Head />
+			<body>
+				<Main />
+				<NextScript />
+				<Script
+					src='https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js'
+					strategy='afterInteractive'
+				/>
+			</body>
+		</Html>
+	);
+}
+
+```
+
+---
+
+---
+
+# Configuración de Base de Datos por medio de Docker Compose
+
+1. Crear el archivo **docker-compose.yml** con la DB deseada (mariaDB)
+
+```
+services:
+    db:
+        container_name: database
+        image: mariadb:jammy
+        volumes:
+            - ./DB_SQL:/var/lib/mysql
+        environment:
+            MARIADB_DATABASE: journal
+            MARIADB_ROOT_PASSWORD: copca_root
+            MARIADB_USER: copca
+            MARIADB_PASSWORD: 123456
+        restart: always
+        ports:
+            - 3306:3306
+
+```
+
+2. Para correr localmente. el -d, significa **detached**
+
+```
+docker compose up -d
+```
+
+---
+
+---
+
+# Configuración de Prisma
+
+1. Instalamos dependencias
+
+```
+npm i -D prisma
+npm i @prisma/client
+```
+
+2. Arrancamos el proyecto
+
+```
+npx prisma init
+```
+
+3. Configurar el archivo **prisma/schema.prisma** de acuerdo a la DB que usaremos
+
+```
+datasource db {
+	provider = "mysql"
+	url      = env("DATABASE_URL")
+}
+```
+
+4. Agregar la cadena de conexion en **.env**
+
+```
+DATABASE_URL=mysql://root:copca_root@localhost:3306/journal
+```
+
+5. Hacer el Modelado en **prisma/schema.prisma**
+
+6. Hacemos la migracion del codigo de prisma a SQL
+
+```
+npx prisma migrate dev
+```
+
+7. Reset de la DB con Prisma
+
+```
+npx prisma migrate reset
+```
+
+8. Abrir Prisma Studio
+
+```
+npx prisma studio
+```
+
+9. Cargar la base de datos con "seedData"
+    1. Crear los archivos sedData en **/prisma/data/**
+    2. Hacer el archivo de carga **/prisma/seed.ts**
+    3. Instalar la dependencia `npm i ts-node`
+    4. Modificar el archivo package.json
+
+```
+"prisma": {
+		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+	},
+```
+
+5. Cargar seedData
+
+```
+npx prisma db seed
+```

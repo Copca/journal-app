@@ -1,0 +1,14 @@
+services:
+    db:
+        container_name: database
+        image: mariadb:jammy
+        volumes:
+            - ./DB_SQL:/var/lib/mysql
+        environment:
+            MARIADB_DATABASE: journal
+            MARIADB_ROOT_PASSWORD: copca_root
+            MARIADB_USER: copca
+            MARIADB_PASSWORD: 123456
+        restart: always
+        ports:
+            - 3306:3306
