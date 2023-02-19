@@ -2,6 +2,7 @@
 
 .env
 /DB_SQL
+prisma/migrations/
 
 # dependencies
 /node_modules
