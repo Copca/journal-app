@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { signIn, getProviders } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { AiFillGithub } from 'react-icons/ai';
 
 import { usuarioSchema } from '@/schema';
 import { ErrorLabel } from './ErrorLabel';
@@ -15,7 +17,6 @@ export const FormRegistrarUsuario = () => {
 		formState: { errors }
 	} = useForm<FormData>({
 		resolver: yupResolver(usuarioSchema)
-		// defaultValues: cliente
 	});
 
 	const onSubmitForm = (data: FormData) => {
@@ -37,11 +38,6 @@ export const FormRegistrarUsuario = () => {
 				</label>
 
 				{errors.nombre && <ErrorLabel>{errors.nombre.message}</ErrorLabel>}
-
-				{/* {errors.nombre && <InputError message={errors.nombre.message} />} */}
-				{/* <p className='mt-1 ml-2 peer-invalid:visible text-pink-600 text-xs'>
-							Error
-						</p> */}
 			</div>
 
 			<div className='relative mb-8'>
@@ -84,11 +80,12 @@ export const FormRegistrarUsuario = () => {
 
 				<button
 					type='button'
+					className='btn bg-great-blue-900 hover:bg-great-blue-800 w-full'
 					data-mdb-ripple='true'
 					data-mdb-ripple-color='light'
-					className='btn bg-great-blue-900 hover:bg-great-blue-800 w-full'
+					onClick={() => signIn('github')}
 				>
-					GitHub
+					<AiFillGithub className='text-lg mr-2' /> GitHub
 				</button>
 			</div>
 

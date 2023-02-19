@@ -20,8 +20,8 @@ export const FormLogin = () => {
 	});
 
 	const onSubmitLogin = async ({ email, password }: FormData) => {
-		// console.log({ email, password });
-		await signIn('credentials', { email, password });
+		console.log({ email, password });
+		// await signIn('credentials', { email, password });
 	};
 
 	return (
@@ -71,6 +71,7 @@ export const FormLogin = () => {
 					data-mdb-ripple='true'
 					data-mdb-ripple-color='light'
 					className='btn bg-great-blue-900 hover:bg-great-blue-800 w-full'
+					onClick={() => signIn('github')}
 				>
 					GitHub
 				</button>

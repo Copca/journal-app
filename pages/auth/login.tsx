@@ -26,20 +26,20 @@ export default LoginPage;
 
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request tim
-// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-// 	const session = await getServerSession(req, res, authOptions);
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+	const session = await getServerSession(req, res, authOptions);
 
-// 	// Si tenemos session redireccionamos a '/''
-// 	if (session) {
-// 		return {
-// 			redirect: {
-// 				destination: '/',
-// 				permanent: false
-// 			}
-// 		};
-// 	}
+	// Si tenemos session redireccionamos a '/''
+	if (session) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false
+			}
+		};
+	}
 
-// 	return {
-// 		props: {}
-// 	};
-// };
+	return {
+		props: {}
+	};
+};

@@ -1,5 +1,9 @@
+/**
+ * Manejamos la protección de ruta on el middleware, se podría hacer con SSR (getServerSideProps) como en la página de registro, pero se tendria que hacer lo mismo en cada una de las rutas
+ */
+
 import { NextPage } from 'next';
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import { LayoutJournal } from '@/components/layouts';
 import { NotaView } from '@/components/views';
@@ -7,8 +11,7 @@ import { Boton } from '@/components/ui';
 
 const HomePage: NextPage = () => {
 	// const session = useSession();
-
-	// console.log(session.data?.usuario);
+	// console.log(session);
 
 	return (
 		<LayoutJournal>
@@ -23,25 +26,3 @@ const HomePage: NextPage = () => {
 };
 
 export default HomePage;
-
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-
-// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-// 	const session = await getServerSession(req, res, authOptions);
-
-// 	if (!session) {
-// 		return {
-// 			redirect: {
-// 				destination: '/auth/login',
-// 				permanent: false
-// 			}
-// 		};
-// 	}
-
-// 	const usuario = session;
-
-// 	return {
-// 		props: { usuario }
-// 	};
-// };
