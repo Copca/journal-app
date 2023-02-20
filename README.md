@@ -224,3 +224,18 @@ npx prisma studio
 ```
 npx prisma db seed
 ```
+
+---
+
+---
+
+# Configuración de Redux-ToolKit
+
+1. Instalar redux https://redux-toolkit.js.org/tutorials/typescript
+
+```
+npm install @reduxjs/toolkit react-redux
+```
+
+2. Crear store/store.ts
+3. Crear el hooks/redux-hook.ts

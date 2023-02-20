@@ -10,8 +10,8 @@ import { NotaView } from '@/components/views';
 import { Boton } from '@/components/ui';
 
 const HomePage: NextPage = () => {
-	// const session = useSession();
-	// console.log(session);
+	const session = useSession();
+	console.log(session.data?.usuario);
 
 	return (
 		<LayoutJournal>

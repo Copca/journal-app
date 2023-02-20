@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import { Usuario, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 import { prisma } from '@/database';
-import { usuarioSchema } from '@/schema';
 
-type Data = { message: string } | Usuario;
+import { usuarioSchema } from '@/schema';
+import { IUsuario } from '@/interfaces';
+
+type Data = { message: string } | IUsuario;
 
 export default function nandler(req: NextApiRequest, res: NextApiResponse<Data>) {
 	switch (req.method) {
@@ -26,7 +28,12 @@ const nuevoUsuario = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
 
 		const passwordHash = await bcrypt.hash(password, 10);
 		const usuario = await prisma.usuario.create({
-			data: { nombre, email, password: passwordHash }
+			data: {
+				nombre,
+				email: email.toLocaleLowerCase(),
+				password: passwordHash
+			},
+			select: { id: true, nombre: true, email: true }
 		});
 
 		return res.status(200).json(usuario);
