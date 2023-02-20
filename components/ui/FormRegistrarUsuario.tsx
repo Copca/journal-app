@@ -5,12 +5,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { AiFillGithub } from 'react-icons/ai';
 
+import { useAppDispatch } from '@/hooks/react-hook';
+import { startCrearCuenta } from '@/store/auth';
+
 import { usuarioSchema } from '@/schema';
 import { ErrorLabel } from './ErrorLabel';
 
 type FormData = yup.InferType<typeof usuarioSchema>;
 
 export const FormRegistrarUsuario = () => {
+	const dispatch = useAppDispatch();
 	const {
 		register,
 		handleSubmit,
@@ -19,8 +23,8 @@ export const FormRegistrarUsuario = () => {
 		resolver: yupResolver(usuarioSchema)
 	});
 
-	const onSubmitForm = (data: FormData) => {
-		console.log(data);
+	const onSubmitForm = ({ nombre, email, password }: FormData) => {
+		dispatch(startCrearCuenta(nombre, email, password));
 	};
 
 	return (

@@ -1,21 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IUsuario } from '@/interfaces';
+
+import { IUsuario, IUsuarioRespApi } from '@/interfaces';
 
 export interface IAuthState {
 	isLoggIn: boolean;
 	usuario?: IUsuario;
+	errorMessage: string;
 }
 
 const initialState: IAuthState = {
-	isLoggIn: false
+	isLoggIn: false,
+	errorMessage: ''
 };
 
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		login: () => {}
+		login: () => {},
+		setError: (state, action: PayloadAction<string>) => {
+			state.errorMessage = action.payload;
+		}
+
 		//restar: (state) => {
 		//    state.counter -= 1;
 		//},
@@ -25,4 +32,4 @@ export const authSlice = createSlice({
 	}
 });
 
-export const { login } = authSlice.actions;
+export const { login, setError } = authSlice.actions;
