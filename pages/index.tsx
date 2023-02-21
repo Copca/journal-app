@@ -3,16 +3,12 @@
  */
 
 import { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 
 import { LayoutJournal } from '@/components/layouts';
 import { NotaView } from '@/components/views';
 import { Boton } from '@/components/ui';
 
 const HomePage: NextPage = () => {
-	const session = useSession();
-	console.log(session.data?.usuario);
-
 	return (
 		<LayoutJournal>
 			<div className='container p-4 h-full'>

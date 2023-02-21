@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
@@ -7,9 +8,12 @@ import * as yup from 'yup';
 import { loginSchema } from '@/schema';
 import { ErrorLabel } from './ErrorLabel';
 
+import { toast } from 'react-toastify';
+
 type FormData = yup.InferType<typeof loginSchema>;
 
 export const FormLogin = () => {
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -20,8 +24,13 @@ export const FormLogin = () => {
 	});
 
 	const onSubmitLogin = async ({ email, password }: FormData) => {
-		console.log({ email, password });
-		// await signIn('credentials', { email, password });
+		const data = await signIn('credentials', {
+			email,
+			password,
+			redirect: false
+		});
+
+		data?.ok ? router.push('/') : toast.error('Usuario o contraseña incorrecta');
 	};
 
 	return (
@@ -35,7 +44,7 @@ export const FormLogin = () => {
 					{...register('email')}
 				/>
 				<label htmlFor='email' className='label-float'>
-					Nombre
+					Email
 				</label>
 
 				{errors.email && <ErrorLabel>{errors.email.message}</ErrorLabel>}

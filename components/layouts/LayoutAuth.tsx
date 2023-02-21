@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-export const LayoutAdmin: FC<PropsWithChildren> = ({ children }) => {
+export const LayoutAuth: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<>
 			<div className='flex items-center justify-center bg-great-blue-900 min-h-screen'>

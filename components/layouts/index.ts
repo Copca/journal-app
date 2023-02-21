@@ -1,2 +1,2 @@
-export * from './LayoutAdmin';
+export * from './LayoutAuth';
 export * from './LayoutJournal';

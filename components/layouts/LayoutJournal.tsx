@@ -1,8 +1,18 @@
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 
 import { Navbar, Sidebar } from '../ui';
+import { useAppDispatch } from '@/hooks/react-hook';
+import { useSession } from 'next-auth/react';
+import { login } from '@/store/auth';
 
 export const LayoutJournal: FC<PropsWithChildren> = ({ children }) => {
+	const { data, status } = useSession();
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(login(data?.usuario));
+	}, [data, status, dispatch]);
+
 	return (
 		<div className='flex flex-col bg-slate-50 min-h-screen'>
 			<Navbar />

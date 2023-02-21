@@ -7,18 +7,18 @@ import { NextPage } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
 
-import { LayoutAdmin } from '@/components/layouts';
+import { LayoutAuth } from '@/components/layouts';
 import { FormLogin } from '@/components/ui';
 
 const LoginPage: NextPage = () => {
 	return (
-		<LayoutAdmin>
+		<LayoutAuth>
 			<div className='bg-white rounded p-8 w-full max-w-lg mx-auto'>
 				<h1 className='text-xl font-bold mb-4'>Login</h1>
 
 				<FormLogin />
 			</div>
-		</LayoutAdmin>
+		</LayoutAuth>
 	);
 };
 

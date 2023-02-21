@@ -6,21 +6,19 @@ import { IUsuario, IUsuarioRespApi } from '@/interfaces';
 export interface IAuthState {
 	isLoggIn: boolean;
 	usuario?: IUsuario;
-	errorMessage: string;
 }
 
 const initialState: IAuthState = {
-	isLoggIn: false,
-	errorMessage: ''
+	isLoggIn: false
 };
 
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		login: () => {},
-		setError: (state, action: PayloadAction<string>) => {
-			state.errorMessage = action.payload;
+		login: (status, action) => {
+			status.isLoggIn = true;
+			status.usuario = action.payload;
 		}
 
 		//restar: (state) => {
@@ -32,4 +30,4 @@ export const authSlice = createSlice({
 	}
 });
 
-export const { login, setError } = authSlice.actions;
+export const { login } = authSlice.actions;
