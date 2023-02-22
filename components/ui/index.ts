@@ -1,6 +1,7 @@
 export * from './Boton';
 export * from './ErrorLabel';
 export * from './FormLogin';
+export * from './FormNota';
 export * from './FormRegistrarUsuario';
 export * from './Galeria';
 export * from './Navbar';

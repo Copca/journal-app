@@ -12,7 +12,7 @@ import { FormRegistrarUsuario } from '@/components/ui';
 const RegistroPage: NextPage = () => {
 	return (
 		<LayoutAuth>
-			<div className='bg-white rounded p-8 w-full max-w-lg mx-auto'>
+			<div className='bg-white rounded p-8 w-full max-w-lg mx-auto animate-fadeIn'>
 				<h1 className='text-xl font-bold mb-4'>Crear Cuenta</h1>
 
 				<FormRegistrarUsuario />

@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { loginSchema } from '@/schema';
 import { ErrorLabel } from './ErrorLabel';

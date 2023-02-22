@@ -17,4 +17,15 @@ model Usuario {
   nombre String
   email String @unique
   password String
+  notas Nota[]
+}
+
+model Nota {
+  id Int @id @default(autoincrement())
+  titulo String
+  contenido String
+  fecha String
+  imagenUrl String?
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
 }

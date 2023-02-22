@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 
-import { Prisma } from '@prisma/client';
 import { prisma } from '@/database';
 
 import { usuarioSchema } from '@/schema';

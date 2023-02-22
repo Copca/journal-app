@@ -11,7 +11,7 @@ export const LayoutJournal: FC<PropsWithChildren> = ({ children }) => {
 
 	useEffect(() => {
 		dispatch(login(data?.usuario));
-	}, [data, status, dispatch]);
+	}, [data?.usuario, status, dispatch]);
 
 	return (
 		<div className='flex flex-col bg-slate-50 min-h-screen'>

@@ -4,16 +4,19 @@
 
 import { NextPage } from 'next';
 
+import { useAppSelector } from '../hooks/react-hook';
+
 import { LayoutJournal } from '@/components/layouts';
-import { NotaView } from '@/components/views';
+import { NadaSeleccionadoView, NotaView } from '@/components/views';
 import { Boton } from '@/components/ui';
 
 const HomePage: NextPage = () => {
+	const { isActiveForm } = useAppSelector((state) => state.journal);
+
 	return (
 		<LayoutJournal>
 			<div className='container p-4 h-full'>
-				{/* < NadaSeleccionadoView/> */}
-				<NotaView />
+				{isActiveForm ? <NotaView /> : <NadaSeleccionadoView />}
 
 				<Boton />
 			</div>

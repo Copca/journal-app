@@ -20,13 +20,6 @@ export const authSlice = createSlice({
 			status.isLoggIn = true;
 			status.usuario = action.payload;
 		}
-
-		//restar: (state) => {
-		//    state.counter -= 1;
-		//},
-		//sumarBy: (state, action: PayloadAction<number>) => {
-		//    state.counter += action.payload;
-		//}
 	}
 });
 
