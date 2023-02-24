@@ -7,7 +7,6 @@ export interface IJournalState {
 	isSaving: boolean;
 	mensaje: string;
 	isActiveForm: boolean;
-	notaActual: INota | null;
 	notas: INota[];
 }
 
@@ -15,7 +14,6 @@ const initialState: IJournalState = {
 	isSaving: false,
 	mensaje: '',
 	isActiveForm: false,
-	notaActual: null,
 	notas: []
 };
 
@@ -23,6 +21,12 @@ export const journalSlice = createSlice({
 	name: 'journal',
 	initialState,
 	reducers: {
+		setNotasDB: (state, action: PayloadAction<INota[]>) => {
+			state.notas = action.payload;
+		},
+		setNotasUsuario: (state, action: PayloadAction<INota[]>) => {
+			state.notas = action.payload;
+		},
 		setActivarForm: (state) => {
 			state.isActiveForm = true;
 		},
@@ -32,10 +36,10 @@ export const journalSlice = createSlice({
 		setNuevaNota: (state, action: PayloadAction<INota>) => {
 			state.notas = [...state.notas, action.payload];
 			state.isActiveForm = false;
-		},
-		setGuardarNota: (state) => {},
-		setActualizarNota: (state) => {},
-		borrarNotaID: (state) => {}
+		}
+		// setGuardarNota: (state) => {},
+		// setActualizarNota: (state) => {},
+		// borrarNotaID: (state) => {}
 
 		//restar: (state) => {
 		//    state.counter -= 1;
@@ -47,10 +51,12 @@ export const journalSlice = createSlice({
 });
 
 export const {
+	setNotasDB,
+	setNotasUsuario,
 	setActivarForm,
 	setIsSaving,
-	setNuevaNota,
-	setGuardarNota,
-	setActualizarNota,
-	borrarNotaID
+	setNuevaNota
+	// setGuardarNota,
+	// setActualizarNota,
+	// borrarNotaID
 } = journalSlice.actions;

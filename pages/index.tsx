@@ -5,6 +5,7 @@
 import { NextPage } from 'next';
 
 import { useAppSelector } from '../hooks/react-hook';
+import { useCheckAuth } from '@/hooks';
 
 import { LayoutJournal } from '@/components/layouts';
 import { NadaSeleccionadoView, NotaView } from '@/components/views';
@@ -12,6 +13,8 @@ import { Boton } from '@/components/ui';
 
 const HomePage: NextPage = () => {
 	const { isActiveForm } = useAppSelector((state) => state.journal);
+
+	useCheckAuth();
 
 	return (
 		<LayoutJournal>

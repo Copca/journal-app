@@ -3,7 +3,7 @@ import { journalApi } from '@/api/jounalApi';
 import { AppDispatch, RootState } from '../store';
 
 import { INota } from '@/interfaces';
-import { setIsSaving, setNuevaNota } from './journalSlice';
+import { setIsSaving, setNotasDB, setNuevaNota } from './journalSlice';
 
 export const startNuevaNota = (titulo: string, contenido: string) => {
 	return async (dispatch: AppDispatch, getState: () => RootState) => {
@@ -18,7 +18,7 @@ export const startNuevaNota = (titulo: string, contenido: string) => {
 		dispatch(setIsSaving(true));
 
 		try {
-			const { data } = await journalApi.post('/notas', nuevaNota);
+			const { data } = await journalApi.post('/notas/nueva', nuevaNota);
 			dispatch(setNuevaNota(data));
 		} catch (error) {
 			console.log(error);
@@ -28,7 +28,21 @@ export const startNuevaNota = (titulo: string, contenido: string) => {
 		} finally {
 			dispatch(setIsSaving(false));
 		}
+	};
+};
 
-		// TODO: peticion http para insertar nota
+export const startCargarNotas = () => {
+	return async (dispatch: AppDispatch, getState: () => RootState) => {
+		const { id } = getState().auth.usuario!;
+
+		try {
+			const { data } = await journalApi.post<INota[]>('/notas', {
+				usuarioId: id
+			});
+
+			dispatch(setNotasDB(data));
+		} catch (error) {
+			console.log(error);
+		}
 	};
 };
